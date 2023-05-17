@@ -1,14 +1,18 @@
-{{ config(materialized='table') }}
+{{ config(materialized='view') }}
 
 WITH source_data AS (
 
-    SELECT * FROM {{ ref('ae_ad_network_1_detailed_report') }}
+    SELECT * FROM {{ ref('ae_ad_network_1_geo_dictionary') }}
 
 ),
 
 rename AS (
 
-    SELECT *
+    SELECT
+        "ID" AS country_id,
+        "COUNTRY_CODE" AS country_code,
+        "NAME" AS country_name,
+        "LOCATION_TYPE" AS location_type
     FROM source_data
 
 )

@@ -1,0 +1,90 @@
+version: 2
+
+models:
+    - name: base__ad_network_1__campaign_updates
+      description: ""
+      columns:
+          - name: campaign_id
+            description: ""
+
+          - name: update_date
+            description: ""
+
+          - name: campaign_name
+            description: ""
+
+    - name: base__ad_network_1__geo_dictionary
+      description: ""
+      columns:
+        - name: country_id
+          description: ""
+
+        - name: country_code
+          description: ""
+          tests:
+            - not_null
+
+        - name: country_name
+          description: ""
+          tests:
+            - not_null
+
+        - name: location_type
+          description: ""
+          tests:
+            - not_null
+
+    - name: base__ad_network_1__detailed_report
+      description: ""
+      tests:
+        - unique:
+            column_name: "(calendar_date::text || campaign_id || '-' || country_id || '-' || state_id)"
+
+    - name: base__ad_network_2__report
+      description: ""
+      tests:
+        - unique:
+            column_name: "(calendar_date::text || campaign_id || '-' || campaign_name)"
+
+    - name: stg__ad_network_1__campaigns
+      description: ""
+      columns:
+        - name: campaign_id
+          description: ""
+          tests:
+            - unique
+            - not_null
+
+        - name: campaign_name
+          description: ""
+          tests:
+            - not_null
+
+    - name: stg__ad_network_1__geos
+      description: ""
+      columns:
+        - name: country_id
+          tests:
+            - unique
+            - not_null
+
+        - name: country_code
+          tests:
+            - not_null
+
+        - name: country_name
+          tests:
+            - not_null
+
+        - name: location_type
+          tests:
+            - not_null
+
+    - name: stg__ad_network_1__report
+      description: ""
+      tests:
+        - unique:
+            column_name: "(calendar_date::text || campaign_id || '-' || country_id || '-' || state_id)"
+      columns:
+        - name: campaign_id
+          description: ""

@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+{{ config(materialized='view') }}
 
 WITH source_data AS (
 
@@ -8,7 +8,14 @@ WITH source_data AS (
 
 rename AS (
 
-    SELECT *
+    SELECT
+        "DATE" AS calendar_date,
+        "CAMPAIGN_ID" AS campaign_id,
+        "COUNTRY_ID" AS country_id,
+        "STATE_ID" AS state_id,
+        "SPEND" AS spend,
+        "IMPRESSIONS" AS impressions,
+        "CLICKS" AS clicks
     FROM source_data
 
 )
