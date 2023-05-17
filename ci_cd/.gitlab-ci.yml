@@ -1,0 +1,56 @@
+image: docker-proxy.choco.kz/docker:20.10.0
+stages:
+  - containerize
+  - linter
+  - run
+
+include:
+  - project: 'randd/templates/ci'
+    file: 'containerize/docker-build.yml'
+  - project: 'randd/templates/ci'
+    file: 'deploy/helm.yml'
+
+.run: &run
+  retry: 2
+  tags:
+    - tests
+  image: ${RELEASE_IMAGE}
+  script:
+    - cd /src && bash entrypoint.sh
+
+lint:
+  stage: linter
+  variables:
+    PROCESS: LINT
+  <<: *run
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: on_success
+
+ci:
+  stage: run
+  variables:
+    PROCESS: CI
+  <<: *run
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH)
+
+cd:
+  stage: run
+  variables:
+    PROCESS: CD
+  <<: *run
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
+
+run:
+  timeout: 3h 30m
+  stage: run
+  variables:
+    PROCESS: RUN
+  <<: *run
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
+      when: manual
