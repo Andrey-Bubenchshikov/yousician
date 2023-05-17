@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: ae_ad_network_1_campaign_updates
+    config:
+      column_types:
+        CAMPAIGN_ID: BIGINT
+
+  - name: ae_ad_network_1_country_report
+    config:
+      column_types:
+        CAMPAIGN_ID: BIGINT
+
+  - name: ae_ad_network_1_detailed_report
+    config:
+      column_types:
+        CAMPAIGN_ID: BIGINT

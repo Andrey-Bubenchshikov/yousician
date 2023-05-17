@@ -150,3 +150,4 @@ dbt_packages/
 .env
 coverage-doc.json
 src/.doit.db
+db/

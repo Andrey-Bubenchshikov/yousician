@@ -4,7 +4,7 @@ repos:
       - id: pull_dev
         name: pull_dev
         files: src
-        entry: bash -c "git pull origin dev"
+        entry: bash -c "git pull origin main"
         language: system
         pass_filenames: false
       - id: limit
@@ -22,7 +22,7 @@ repos:
       - id: lint
         name: lint
         files: src
-        entry: "docker compose run --rm web doit lint"
+        entry: "docker compose run --rm web doit sqlfluff"
         language: system
         pass_filenames: false
 
