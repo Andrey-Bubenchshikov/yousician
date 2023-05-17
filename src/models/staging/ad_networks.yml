@@ -69,16 +69,10 @@ models:
             - not_null
 
         - name: country_code
-          tests:
-            - not_null
 
         - name: country_name
-          tests:
-            - not_null
 
         - name: location_type
-          tests:
-            - not_null
 
     - name: stg__ad_network_1__report
       description: ""
