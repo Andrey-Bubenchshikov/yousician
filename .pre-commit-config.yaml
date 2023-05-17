@@ -1,0 +1,28 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pull_dev
+        name: pull_dev
+        files: src
+        entry: bash -c "git pull origin dev"
+        language: system
+        pass_filenames: false
+      - id: limit
+        name: limit
+        files: src
+        entry: bash -c "docker compose run -T --rm web python tools/limit.py $(git diff --name-only origin/main)"
+        language: system
+        pass_filenames: false
+      - id: documentation
+        name: docs
+        files: src
+        entry: bash -c "docker compose run -T --rm web dbt run-operation required_docs"
+        language: system
+        pass_filenames: false
+      - id: lint
+        name: lint
+        files: src
+        entry: "docker compose run --rm web doit lint"
+        language: system
+        pass_filenames: false
+
