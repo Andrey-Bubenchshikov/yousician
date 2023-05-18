@@ -1,4 +1,6 @@
-with 
+with
+    -- remove where caluse and use group by user_id, min(login_at)
+    -- country is not needed but if needed then group by country
     signed_up_users as (
         select
             user_id,
@@ -7,6 +9,7 @@ with
         from login as lla
              where login_at = (select min(login_at) from login llb where lla.user_id = llb.user_id)
     ),
+    -- ok
      first_song_played as (
          select * from (
             select 
@@ -18,6 +21,7 @@ with
         )
         where r_n = 1
     ),
+    -- ok
      last_song_played as (
         select * from (
             select
@@ -29,6 +33,7 @@ with
         )
         where r_n = 1
     ),
+    -- ok
      guitar_challenges_discovered as (
         select
             user_id,
@@ -36,7 +41,8 @@ with
         from challenge_opened
           where instrument = 'guitar'
         group by user_id
-    ),
+    )
+    -- this left join looks scary. He adds info from ONE event table to ALL events in another event table
      song_played_after_challenge_staging as (
         select
             song_played.user_id,
@@ -59,6 +65,7 @@ with
             min(song_played_at) as first_song_played_after_challenge_at
         from song_played_after_challenge_staging s_a
              where time_diff <= 2000 and time_diff > 0
+             -- I dont understand this
                    and time_diff = (select min(time_diff)
                                            from song_played_after_challenge_staging s_b
                                                 where s_a.user_id = s_b.user_id
