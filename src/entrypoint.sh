@@ -11,6 +11,7 @@ echo "env variables are populated!^_^"
 
 case "$PROCESS" in
 "DBT_DOCS")
+    wait_for postgres 5432;
     dbt docs generate && dbt docs serve --port=8000
     ;;
 "LINT")
