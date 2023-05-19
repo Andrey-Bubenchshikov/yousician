@@ -5,8 +5,6 @@ $ pre-commit install
 ```
 
 #### For development:
-``` $ find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs sudo rm -rf ```
-
 ``` $ chmod +x src/entrypoint.sh ```
 
 ``` $ docker compose up ```
