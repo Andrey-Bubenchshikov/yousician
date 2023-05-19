@@ -2,83 +2,185 @@ version: 2
 
 models:
     - name: base__ad_network_1__campaign_updates
-      description: ""
+      description: "Base table for campaign history report from Ad Network 1"
       columns:
-          - name: campaign_id
-            description: ""
+        - name: campaign_id
+          description: "ID of a marketing campaign from Ad Network 1"
 
-          - name: update_date
-            description: ""
+        - name: update_date
+          description: "Date when the campaign info was updated"
 
-          - name: campaign_name
-            description: ""
+        - name: campaign_name
+          description: "Name of the campaign"
+
+    - name: base__ad_network_1__country_report
+      description: "Base table for country-level performance report of Ad Network 1"
+      columns:
+        - name: calendar_date
+          description: "Date"
+
+        - name: campaign_id
+          description: "ID of a marketing campaign from Ad Network 1"
+
+        - name: country_id
+          description: "ID of a location (country)"
+
+        - name: spend
+          description: "Ad spend"
+
+        - name: impressions
+          description: "# Impressions of the ads"
+
+        - name: clicks
+          description: "# Clicks on the ads"
+
+    - name: base__ad_network_1__detailed_report
+      description: "Base table for state-level performance report of Ad Network 1 when applicable"
+      tests:
+        - unique:
+            column_name: "(calendar_date::text || campaign_id || '-' || country_id || '-' || state_id)"
+      columns:
+        - name: calendar_date
+          description: "Date"
+
+        - name: campaign_id
+          description: "ID of a marketing campaign from Ad Network 1"
+
+        - name: country_id
+          description: "ID of a location (country)"
+
+        - name: state_id
+          description: "ID of a location (state)"
+
+        - name: spend
+          description: "Ad spend"
+
+        - name: impressions
+          description: "# Impressions of the ads"
+
+        - name: clicks
+          description: "# Clicks on the ads"
 
     - name: base__ad_network_1__geo_dictionary
-      description: ""
+      description: "Base table for geo dictionary for Ad Network 1"
       columns:
-        - name: country_id
-          description: ""
+        - name: location_id
+          description: "ID of a location (country or location)"
 
         - name: country_code
-          description: ""
+          description: "Alpha-2 code of a country"
           tests:
             - not_null
 
-        - name: country_name
-          description: ""
+        - name: location_name
+          description: "Full name of the location"
           tests:
             - not_null
 
         - name: location_type
-          description: ""
+          description: "Type of the location"
           tests:
             - not_null
 
-    - name: base__ad_network_1__detailed_report
-      description: ""
-      tests:
-        - unique:
-            column_name: "(calendar_date::text || campaign_id || '-' || country_id || '-' || state_id)"
-
     - name: base__ad_network_2__report
-      description: ""
+      description: "Base table for performance report of Ad Network 2"
       tests:
         - unique:
             column_name: "(calendar_date::text || campaign_id || '-' || campaign_name)"
-
-    - name: stg__ad_network_1__campaigns
-      description: ""
       columns:
         - name: campaign_id
-          description: ""
+          description: "ID of a marketing campaign from Ad Network 2"
+
+        - name: campaign_name
+          description: "Name of a marketing campaign from Ad Network 2"
+
+        - name: calendar_date
+          description: "Date"
+
+        - name: spend
+          description: "Ad spend"
+
+        - name: impressions
+          description: "# Impressions of the ads"
+
+        - name: clicks
+          description: "# Clicks on the ads"
+
+    - name: stg__ad_network_1__campaigns
+      description: "Model that creates a unique combination of marketing campaign ID and Name
+      from Ad Network 1"
+      columns:
+        - name: campaign_id
+          description: "ID of a marketing campaign from Ad Network 1"
           tests:
             - unique
             - not_null
 
         - name: campaign_name
-          description: ""
+          description: "Name of the campaign from Ad Network 1"
           tests:
             - not_null
 
     - name: stg__ad_network_1__geos
-      description: ""
+      description: "Model that removes values 'None' from country code"
       columns:
-        - name: country_id
+        - name: location_id
+          description: "ID of a location (country or location)"
           tests:
             - unique
             - not_null
 
         - name: country_code
+          description: "Alpha-2 code of a country"
 
-        - name: country_name
+        - name: location_name
+          description: "Full name of the location"
 
         - name: location_type
+          description: "Type of the location"
 
     - name: stg__ad_network_1__report
-      description: ""
+      description: "Model that unions country and state reports. Also adds geo dimensions to both reports."
       tests:
         - unique:
             column_name: "(calendar_date::text || campaign_id || '-' || country_id || '-' || state_id)"
       columns:
+        - name: calendar_date
+          description: "Date"
+
         - name: campaign_id
-          description: ""
+          description: "ID of a marketing campaign from Ad Network 1"
+
+        - name: campaign_name
+          description: "Name of the campaign"
+
+        - name: country_code
+          description: "Alpha-2 code of a country"
+
+        - name: country_id
+          description: "ID of a location (country)"
+
+        - name: country_name
+          description: "Full name of the country"
+
+        - name: country_type
+          description: "Type of the country"
+
+        - name: state_id
+          description: "ID of a location (state)"
+
+        - name: state_name
+          description: "Full name of the state"
+
+        - name: state_type
+          description: "Type of the state"
+
+        - name: spend
+          description: "Ad spend"
+
+        - name: impressions
+          description: "# Impressions of the ads"
+
+        - name: clicks
+          description: "# Clicks on the ads"
+

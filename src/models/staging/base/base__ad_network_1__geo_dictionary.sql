@@ -9,9 +9,9 @@ WITH source_data AS (
 rename AS (
 
     SELECT
-        "ID" AS country_id,
+        "ID" AS location_id,
         "COUNTRY_CODE" AS country_code,
-        "NAME" AS country_name,
+        "NAME" AS location_name,
         "LOCATION_TYPE" AS location_type
     FROM source_data
 

@@ -22,7 +22,7 @@ repos:
       - id: lint
         name: lint
         files: src
-        entry: "docker compose run --rm web doit sqlfluff"
+        entry: bash -c "docker compose run -T --rm web doit sqlfluff"
         language: system
         pass_filenames: false
 

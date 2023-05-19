@@ -6,6 +6,9 @@ WITH campaigns AS (
 
 keep_unique_campaign_id_name AS (
 
+    -- for now unique combination work, but there could be an update that changes campaign name
+    -- if that were to happen test for uniqueness would fail and model would have to keep the latest
+    -- changes to campaign name
     SELECT
         campaign_id,
         campaign_name

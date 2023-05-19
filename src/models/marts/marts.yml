@@ -1,0 +1,39 @@
+version: 2
+
+models:
+    - name: mart__ad_networks
+      description: "Model that unions country and state reports. Also adds geo dimensions to both reports."
+      columns:
+        - name: calendar_date
+          description: "Date"
+
+        - name: campaign_id
+          description: "ID of a marketing campaign from Ad Network 1"
+
+        - name: campaign_name
+          description: "Name of the campaign"
+
+        - name: country_code
+          description: "Alpha-2 code of a country"
+
+        - name: country_name
+          description: "Full name of the country"
+
+        - name: country_type
+          description: "Type of the country"
+
+        - name: state_name
+          description: "Full name of the state"
+
+        - name: state_type
+          description: "Type of the state"
+
+        - name: spend
+          description: "Ad spend"
+
+        - name: impressions
+          description: "# Impressions of the ads"
+
+        - name: clicks
+          description: "# Clicks on the ads"
+

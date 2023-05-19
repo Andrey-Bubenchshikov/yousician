@@ -2,7 +2,7 @@ from sys import argv
 
 
 def is_dbt_file(filename: str) -> bool:
-    dbt_extensions = ('.sql', '.yml')
+    dbt_extensions = ('.sql',)
     return any(
         dbt_extension in filename for dbt_extension in dbt_extensions
     )
